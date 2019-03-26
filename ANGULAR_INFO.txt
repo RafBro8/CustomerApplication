@@ -1,0 +1,107 @@
+TypeScript.ts - allows to write code from other languages
+like Java or C (object oriented languages), compiles this code to JavaScript,
+and puts it in dist folder in the project
+
+Angular is made in TypeScript
+Angular is a binding framework:
+View (HTML) <-> Binding Code ( whatever name like: Presenter or, View Model or, Controller or, Code Behind) <-> Model (JavaScript Object)
+MVW Model
+
+src - source code
+app - all the code for Angular
+ - component - binds UI and Model code
+ - module - group of multiple Components
+
+EX:
+Component
+
+export class AppComponent {
+  title = 'CustomerApplication';
+}
+
+HTML/UI
+
+<h1>
+  Welcome to {{ title }}!
+</h1>
+
+{{ title }} - expression display values/properties of a Component on a UI
+
+@Component - decorator - defines how Component should work and binds HTML/CSS and Component
+
+need to export Component in order to be able to import it
+
+
+Module - groups Components
+decorator for Module is @NgModule
+@NgModule - declarations: list of Components
+          - bootstrap: specifies the startup/main Component
+
+
+
+
+use command tsc - command for TypeScript - compile ts files
+to js and put into dist folder
+
+dist folder - finally compiled folder - final compiled JavaScript -
+ts files get compiled to js files
+
+node_modules - all npm installs get copied to this folder
+
+e2e - end to end testing, whitebox test will fire up the src code
+
+Main Project components:
+Angular, Node, TypeScript
+all 3 have their own config files:
+angular.json
+ - sourceRoot - source code
+ - architect - which builders will run for which commands
+
+package.json - dev dependencies don't go to prod, only used during development phase in IDE
+
+tsconfig.json - how compilation of TypeScript should be done
+
+Linting is the process of running a program that will analyse code for potential errors
+tslint.json - used during linting process
+
+Root (App) (tsconfig.json - Root config)
+- CustomerApplication (Code) (tsconfig.app.json - App config override Root)
+- CustomerApplication (Test)
+
+ng build - command to take what is in src code to compile it to dist folder, then dist folder can be taken to Prod
+
+main.ts - defines/bootstraps the Main/Startup Module of the project
+index.html - invokes the Main/Startup Module
+1. index.html starts (loaded in user browser for example)
+2. index.html calls main.ts
+3. main.ts calls the AppModule (main/startup module) using platformBrowserDynamic().bootstrapModule(AppModule)
+4. AppModule loads the AppComponent using bootstrap: [AppComponent]
+5. AppComponents loads the HTML
+
+
+<app-root></app-root> - selector - AppComponent HTML runs inside this section
+located also in:
+@Component({
+  selector: 'app-root',
+
+
+polyfills.ts -  help you run new ES version of JavaScript on old browsers which does not support it
+
+Before going live:
+1. ts files need to be compiled to js files
+2. Bundle Modules/Components together
+3. Take CSS and HTML files and put them in dist/final folder
+
+All of the above is done by Webpack Package Manager
+in Angular to use webpack, run command ng build
+
+after Build process:
+runtime.js - this is for webpack runtime
+vendor.js - this is the actual project code which you coded (Component, Modules and Model)
+main.js - this points to the first module of your project
+styles.js - All CSS code goes here
+
+when running ng server command everything is loaded/saved in memory
+to run from harddrive - need to put in url like this - http://localhost:4200/dist/AppName
+default url is - http://localhost:4200/
+
