@@ -74,8 +74,8 @@ main.ts - defines/bootstraps the Main/Startup Module of the project
 index.html - invokes the Main/Startup Module
 1. index.html starts (loaded in user browser for example)
 2. index.html calls main.ts
-3. main.ts calls the AppModule (main/startup module) using platformBrowserDynamic().bootstrapModule(AppModule)
-4. AppModule loads the AppComponent using bootstrap: [AppComponent]
+3. main.ts calls the CustomerAppModule (main/startup module) using platformBrowserDynamic().bootstrapModule(CustomerAppModule)
+4. CustomerAppModule loads the AppComponent using bootstrap: [AppComponent]
 5. AppComponents loads the HTML
 
 
@@ -104,4 +104,43 @@ styles.js - All CSS code goes here
 when running ng server command everything is loaded/saved in memory
 to run from harddrive - need to put in url like this - http://localhost:4200/dist/AppName
 default url is - http://localhost:4200/
+
+ngModel - () sends data from UI to the object
+          [] receives data from UI to object
+
+
+Angular file naming convention - Angular Style Guide-
+App Name + Component.ts, ex: CustomerApp.component.ts
+App Name + Module.ts, ex: CustomerApp.module.ts
+also app.component.css and app.component.html
+Component has css, html and code
+You can change naming as needed for your project and needs
+
+Bindings are one or two way:
+UI -> Component
+UI <- Component
+UI <-> Component
+(), [] one way binding
+[ ( ) ] - two way binding
+
+
+UI - Component - Model
+
+
+package-lock.json - has all the absolute version entries after npm version resolution using ~ and ^
+
+ex: version 6.1.0
+6 = Major version
+1 = Minor version
+0 = Revision
+
+Major version - breaking changes
+Minor version - new features, no breaking
+Revision - bug fixes, patches, no breaking
+
+to see all version of some module - use npm view modulename versions
+
+npm does not increment the latest major version automatically with carrot ^ - need to do manually
+ex: go from 1.0.0 to 2.1.1 - manual update needed
+npm increments only minor versions and revisions
 
