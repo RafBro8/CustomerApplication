@@ -74,8 +74,8 @@ main.ts - defines/bootstraps the Main/Startup Module of the project
 index.html - invokes the Main/Startup Module
 1. index.html starts (loaded in user browser for example)
 2. index.html calls main.ts
-3. main.ts calls the CustomerAppModule (main/startup module) using platformBrowserDynamic().bootstrapModule(CustomerAppModule)
-4. CustomerAppModule loads the AppComponent using bootstrap: [AppComponent]
+3. main.ts calls the CustomerAppMainModule (main/startup module) using platformBrowserDynamic().bootstrapModule(CustomerAppMainModule)
+4. CustomerAppMainModule loads the AppComponent using bootstrap: [AppComponent]
 5. AppComponents loads the HTML
 
 
@@ -110,8 +110,8 @@ ngModel - () sends data from UI to the object
 
 
 Angular file naming convention - Angular Style Guide-
-App Name + Component.ts, ex: CustomerApp.component.ts
-App Name + Module.ts, ex: CustomerApp.module.ts
+App Name + Component.ts, ex: CustomerApp.CustomerComponent.ts
+App Name + Module.ts, ex: CustomerApp.MainModule.ts
 also app.component.css and app.component.html
 Component has css, html and code
 You can change naming as needed for your project and needs
@@ -144,3 +144,51 @@ npm does not increment the latest major version automatically with carrot ^ - ne
 ex: go from 1.0.0 to 2.1.1 - manual update needed
 npm increments only minor versions and revisions
 
+Master Page (2.Home Page, 3.Customer Page, 4.Supplier Page) - define uniform look and feel for the site
+Master Page (CustomerApp.MasterPageView.component.html)
+Home Page (CustomerApp.HomePageView.component.html)
+Customer Page (CustomerApp.CustomerView.component.html)
+Supplier Page (CustomerApp.SupplierView.component.html)
+
+Angular UI should always have Angular Component for it
+Master Page (CustomerApp.MasterPageView.component.html) -> CustomerApp.MasterPage.ts (handles MasterPage View)
+Home Page (CustomerApp.HomePageView.component.html) -> CustomerApp.HomeComponent.ts (handles Home View)
+Customer Page (CustomerApp.CustomerView.component.html) -> CustomerApp.CustomerComponent.ts (handles Customer View)
+Supplier Page (CustomerApp.SupplierView.component.html) -> CustomerApp.SupplierComponent.ts (handles Supplier View)
+
+Home folder - Master Page and Home Page code
+
+CustomerApp.MainModule.ts will handle Customer Component, Supplier Component, Home Component, so leave file outside of any folders
+
+Only the Customer has a Model currently
+
+index.html -> main.ts -> Module.ts -> Component -> UI -> Selector in index.html (<app-root></app-root>)
+in index.html app-root only the Master Page will load
+the rest of tge pages (Customer, Supplier, Home) will load inside the Master Page
+like - <a href="Home">Home</a><br>   <a href="Customer">Customer</a><br>    etc
+Only CustomerApp.MasterPageComponent.ts should have   selector: 'app-root'
+
+bootstrap defines which is startup Component to be loaded first
+declarations define which subsequent Components will be loaded after startup Component
+
+templateUrl in MasterPage Component takes the MasterPage and loads it into index.html Selector
+
+in CustomerApp.MasterPageView.component.html Routing (Routing Collection) helps load the other Components like:
+Home, Customer, Supplier, into <div> tags
+ex: href/uri   /Customer/   Customer Component   ---load into ---> Master Page
+Routing fields: url/href and matching Component
+path: 'Home', component: HomeComponent
+
+in CustomerApp.MasterPageView.component.html, in <div> tags put <router-outlet></router-outlet>
+router-outlet - reserved tag
+change <a href="Home">Home</a><br>   to <a [routerLink]="['Home']">Home</a><br>
+need to import/setup Routing in MainModule file as well
+
+2 phases: Loading Master Page -> Navigating Master Page
+Loading Master Page:
+index.html --> <script> --> main.ts --Platform Browser Dynamic --> Main Module -- Bootstrap --> Masterpage Component -- Template Url --> MasterPage View
+index.html <-- <selector> -- Masterpage Component <-- Masterpage View
+
+Navigating Master Page:
+Master Page -- [routerlink] /customer/ --> Router Collection -- Lookup in Collection --> Customer Component -- Template Url --> Customer View
+Master Page (<router-outlet></router-outlet>) <-- Load in router outlet element -- Customer Component <-- Customer View

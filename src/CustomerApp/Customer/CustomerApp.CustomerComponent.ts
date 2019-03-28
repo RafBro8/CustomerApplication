@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import {Customer} from './CustomerApp.model';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './CustomerApp.component.html',
-  styleUrls: ['./CustomerApp.component.css']
+  templateUrl: './CustomerApp.CustomerView.component.html',
 })
 export class CustomerComponent {
   title = 'CustomerApplication';
@@ -12,7 +10,7 @@ export class CustomerComponent {
   CustomerModels: Array<Customer> = new Array<Customer>();
   Add() {
     this.CustomerModels.push(this.CustomerModel);
-    this.CustomerModel = new Customer(); //clear UI
+    this.CustomerModel = new Customer(); // clear UI
   }
 }
 
