@@ -192,3 +192,58 @@ index.html <-- <selector> -- Masterpage Component <-- Masterpage View
 Navigating Master Page:
 Master Page -- [routerlink] /customer/ --> Router Collection -- Lookup in Collection --> Customer Component -- Template Url --> Customer View
 Master Page (<router-outlet></router-outlet>) <-- Load in router outlet element -- Customer Component <-- Customer View
+
+Lazy Loading
+At first load of page, everything is loaded, all Components are loaded, which affects performance
+with Lazy Loading only the Home and Masterpage Components should be loaded
+Lazy loading - on click/on demand, load other Components when clicking, when needed
+1st step is to divide project into self contained Angular modules
+without Lazy Loading, all Components are loaded from Main Module
+create Main Module (Masterpage and Home Components), create Customer Module (Customer Component),
+create Supplier Module (Supplier Component)
+also split into different Routes (Home, Customer, Supplier)
+
+loadChildren (dynamic loading) - load subsequent Components dynamically in Main Routing file,
+when clicking on href link then that Component will be loaded
+ex: in Main Routing -   { path: 'Customer', loadChildren: '../Customer/CustomerApp.CustomerModule#CustomerModule'},
+
+example Route Url:
+Customer/Add - Customer is Root route, Add is Child route
+Customer/Delete - Customer is Root route, Delete is Child route
+Supplier/Add - Supplier is Root route, Add is Child route
+Root route is defined in Main Routes (forRoot in Module.ts file)
+Child route is loaded with loadChildren (forChild in Module.ts file)
+forRoot - use only in Main Module
+
+Browser Module - only for Main Module
+Common Module - Customer Module and Supplier Module
+
+webpack bundling engine - finds imports and starts bundling modules with main.ts
+
+Angular Validation
+
+1. There is a UI
+2. On UI there are UI controls (text boxes, buttons, dropdowns, etc)
+3. On UI controls we apply zero, one,  or many validation
+
+Component connects UI and Model
+Model = Logic + Data
+Validation should be put in the Model (Logic)
+Import NgForm, FormGroup, FormControl, Validators, FormBuilder from @angular/forms into CustomerApp.model.ts
+FormBuilder helps create tree object model of FormGroup, FormControl, Validators
+
+Using and applying Angular validation (CCC process)
+1. Create - create validation tree, create validation object model (FormGroup, FormControl, Validators)
+2. Connect - connect validation object model to the UI
+3. Check - IsValid, IsDirty, valid or not valid?
+
+FormBuilder (constructor(){ }) - const _builder = new FormBuilder();
+
+Once validation model is created, it needs to be connected to the UI
+in UI need to wrap code to validate into <form></form> tags
+then put FormGroup inside these <form></form> tags in UI file
+amd put formControlName in <input> tags in the UI
+
+dirty flag - to not see exception messages in validations right away, messages show when user inputs something
+
+
