@@ -247,3 +247,61 @@ amd put formControlName in <input> tags in the UI
 dirty flag - to not see exception messages in validations right away, messages show when user inputs something
 
 
+Dependency Injection (DI) - centralized control on how the changes will happen
+
+Centralized and Conditional DI
+Centralized - use Provider, manage dependencies centrally, inject on Constructor
+Conditional - client decides what kind of Object it wants to use
+
+Injector and Tokens in Conditional DI
+Tokens - values (string, number, etc) you can use to point to specific classes/objects to use, Lookup injector.get()
+
+ex (Module): { provide: '1', useClass: DbLogger },
+    { provide: '2', useClass: ConsoleLogger }
+
+To inject conditionally, client will need Injector object
+
+ex (Component):  constructor(_injector: Injector) {
+                     this.Logobj = _injector.get('1');
+
+
+
+When creating an Interface (ILogger for example) that has code implementation that is used in multiple places
+like class ConsoleLogger being used in some Components, when new Logger is created in ILogger, it might require changes across the board where
+ILogger interface is used
+All classes point to ILogger, but actual Object Creation ( Logobj: ILogger = new ConsoleLogger();) should happen somewhere else
+Provider (Object Creation Centrally) --Inject--> to Components
+ILogger references different Logger classes
+Provider works with ILogger to create which Object to create
+Provider should be loaded from a file that loads on the beginning like Main Module
+ex:   providers: [{
+        provide: BaseLogger,
+        useClass: ConsoleLogger
+      }],
+Provider does Dependency Injection for Components that use the Interface
+
+Interfaces are not use in JavaScript. They are syntax sugar in TypeScript, but there is no equivalent in JavaScript
+to prevent Interface issues, create base class in Interface to implement Interface code in it and leave Interface empty
+and have other classes extend this base class instead of implementing the Interface
+ex: export class BaseLogger implements ILogger
+
+
+Dynamic collections (make Provider dynamic instead of hardcoded:
+Can use:
+
+var providerscollection:any = [];
+providerscollection.push({provide: "1", useClass: DbLogger})   - ConditionalDI
+providerscollection.push({provide: BaseLogger, useClass: ConsoleLogger}) - Centralized DI
+In Module - providers: [providerscollection]
+
+Instead of:
+ providers: [{
+    provide: BaseLogger,
+    useClass: ConsoleLogger
+  },
+    { provide: '1', useClass: DbLogger },
+
+Classes in Angular are termed as Services
+
+Good architecture - Change at one place should not lead to change at many places
+
