@@ -305,3 +305,42 @@ Classes in Angular are termed as Services
 
 Good architecture - Change at one place should not lead to change at many places
 
+
+
+Input, Output, Event Emitters, User Control Flow
+
+User Control - reusable piece of UI which we can plug into any HTML Page
+
+Inputs, Outputs, Event Emitters
+User control inside a page - needs to interact with the HTML page where it is located, receiving inputs from the page,
+or sending outputs to that page
+Outputs from User Control are often Events (click event, etc)
+Event Emitters - events over which Outputs will travel from User Control to HTML Page
+
+Use getters and setters to set/retrieve data from external sources inside a Class object, help encapsulate variables of a Class
+Use @Input("variable-name") with getters/setters
+
+
+useful debugging info in Angular:
+In browser console -> Sources -> webpack:// -> . folder -> code files -> can set breakpoints in the code in the browser
+
+
+
+Making HTTP Calls in Angular
+
+Legacy - HTTP
+New - HttpClient
+
+Interceptorts in HttpClient - help inject pre-processing logic before HTTP call is made
+
+subscribe() - handle Success, Error
+
+need HttpClient Module
+
+DTO - Data Transfer Object - handling sending Data, just has data
+
+Lambdas and Callbacks - ex: res => this.Success(res), res => this.Error(res)
+
+Json-server - the fake webserver - runs server on HTTP Port (can make POST, GET, PUT calls for testing)
+npm install -g json-server
+run json server - json-server --watch db.json
